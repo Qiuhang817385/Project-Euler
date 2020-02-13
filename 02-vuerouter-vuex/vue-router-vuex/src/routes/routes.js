@@ -10,8 +10,15 @@ export default new VueRouter({
   routes: [
     // 重定向
     { name: 'home', path: '/', redirect: '/a' },
-    { name: 'page1', path: '/page1', component: Page1 },
-    { name: 'page2', path: '/page2:id', component: Page2 },
+    {
+      name: 'page1', path: '/page1', component: Page1,
+      // beforeEnter: (to, from, next) => {
+      //   next()
+      // }
+    },
+    // 这种方式必须得带参数才可以
+    // http://localhost:8888/page2/12 必须是这种方式
+    { name: 'page2', path: '/page2/:id', component: Page2 },
     {
       name: 'page3',
       path: '/page3',

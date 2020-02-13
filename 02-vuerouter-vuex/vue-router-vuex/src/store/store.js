@@ -12,6 +12,9 @@ export default new vuex.Store({
   mutations: {
     add (state) {
       state.count++;
+    },
+    dec (state) {
+      state.count--;
     }
   },
   strict: true,
@@ -25,9 +28,14 @@ export default new vuex.Store({
   actions: {
     addSync ({ commit }) {
       setTimeout(() => {
+        // 通过commit来触发事件
         commit('add')
         console.log('123');
       }, 3000)
+    },
+    decSync (obj) {
+      console.log(obj);
+
     }
   }
 

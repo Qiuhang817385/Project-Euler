@@ -1,19 +1,17 @@
 <template>
   <div id="app">
-    <!-- 使用name需要加绑定 -->
-    <!--直接的话不需要 -->
-    <router-link :to="{name:'page1',params:{userId:123}}">页面1</router-link>
-    <router-link to="/page2">页面2</router-link>
-    <router-link :to="{name:'page3'}">页面3</router-link>
-    <router-view></router-view>
+    <img alt="Vue logo" src="./assets/logo.png">
+    <HelloWorld msg="Welcome to Your Vue.js App"/>
   </div>
 </template>
 
 <script>
+import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'App',
   components: {
+    HelloWorld
   }
 }
 </script>

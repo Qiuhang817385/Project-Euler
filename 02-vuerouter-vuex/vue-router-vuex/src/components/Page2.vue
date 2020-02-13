@@ -2,7 +2,7 @@
   <div>
     页面2
     <div>
-           哈喽啊{{id}}
+           哈喽啊{{$route.params.id}}
           </div>
   </div>
 </template>
@@ -11,6 +11,7 @@
 export default {
   created () {
     console.log(this.$route)
+    console.log(this.$route.params.id)
   },
   props: ['id']
 }
