@@ -2,8 +2,17 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
+import Cart from '../views/Cart.vue'
+
+import History from '../utils/history'
 // vimp
 Vue.use(VueRouter)
+Vue.use(History)
+
+VueRouter.prototype.goBack = function () {
+  this.isBack = true;
+  this.back();
+}
 
 const routes = [
   {
@@ -28,6 +37,12 @@ const routes = [
     path: '/login',
     component: Login,
     name: 'login'
+  },
+  // 配置购物车
+  {
+    path: '/cart',
+    name: "cart",
+    component: Cart
   }
 ]
 
@@ -73,4 +88,15 @@ router.beforeEach((to, from, next) => {
   }
 })
 
+
+router.afterEach((to, from) => {
+  if (router.isBack) {
+    History.pop();
+    router.isBack = false;
+    router.transitionName = "route-back";
+  } else {
+    History.push(to.path);
+    router.transitionName = "route-forward"
+  }
+})
 export default router
