@@ -1,10 +1,10 @@
 <template>
   <div class="home">
-    <kHeader title="你好">
+    <!-- <kHeader title="你好">
       <i class="cubeic-tag"></i>
     </kHeader>
     <img alt="Vue logo"
-         src="../assets/logo.png">
+         src="../assets/logo.png"> -->
     <!-- 轮播图 -->
     <cube-slide :data="slider"
                 :interval="3000">

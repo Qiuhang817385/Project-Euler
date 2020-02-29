@@ -12,11 +12,12 @@
            @click="addCart(index)"></i>
       </div>
     </div>
-    <div>总价 {{total}}</div>
+    <div class="totalPrice">总价 {{total}}</div>
 
     <cube-button :disabled="true"
                  v-if="total<minTotal">还差{{minTotal-total}}可以购买</cube-button>
-    <cube-button v-else>
+    <cube-button v-else
+                 @click="showT">
       下单
     </cube-button>
     <!-- <div>
@@ -46,6 +47,22 @@ export default {
     },
     removeCart (index) {
       this.$store.commit("cartremove", index);
+    },
+    showT () {
+      const toast = this.$createToast({
+        time: 1300,
+        txt: "正在下单",
+        type: "loading",
+        onTimeout: () => {
+          const toast = this.$createToast({
+            time: 1300,
+            txt: "下单成功",
+            type: "correct",
+          });
+          toast.show();
+        }
+      });
+      toast.show();
     }
   }
 };
@@ -60,4 +77,8 @@ export default {
     float right
   i
     font-size 18px
+.totalPrice
+  margin-top 60px
+  font-size 20px
+  font-weight 500
 </style>

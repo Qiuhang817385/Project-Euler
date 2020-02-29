@@ -4,6 +4,9 @@ export default {
   // 返回一个promise做处理
   login (user) {
     // 实际应该用post
-    return axios.get('/api/login', { params: user })
+
+    // return axios.get('/api/login', { params: user })
+    return axios.get('http://www.qiuhang.club:7300/mock/5e5a17e700fbdf09dcf21f8e/api/login', { params: user })
+
   }
 }

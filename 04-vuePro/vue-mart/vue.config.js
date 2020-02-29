@@ -1,4 +1,16 @@
+const path = require('path');
+function resolve (dir) {
+  return path.join(__dirname, dir);
+}
 module.exports = {
+  publicPath: process.env.NODE_ENV === 'production'
+    ? './'
+    : '/',
+  // proxy: {
+  //   "/": {
+  //     target: ""
+  //   }
+  // },
   css: {
     loaderOptions: {
       stylus: {
@@ -6,6 +18,11 @@ module.exports = {
         'import': []
       }
     }
+  },
+  chainWebpack: (config) => {
+    config.resolve.alias
+      .set('@', resolve('./src'))
+      .set('@/assets', resolve('./src/assets'))
   },
   pluginOptions: {
     'cube-ui': {
@@ -25,28 +42,26 @@ module.exports = {
       //么有起作用
       before (app) {
         // 模拟的后台服务器,express
-        app.get("/api/login", function (req, res) {
-          console.log(req.query);
-
-          const { username, passwd } = req.query
-          console.log('====================================');
-          console.log(username, passwd);
-          console.log('====================================');
-          if (username == 'qiuhang' && passwd == '123') {
-            res.json({
-              code: 0,
-              token: 'token-' + (new Date().getTime() + 1000 * 60)
-            })
-          } else {
-            res.json({
-              code: 1,
-              message: "用户名或者密码错误"
-            })
-          }
-        });
+        // app.get("/api/login", function (req, res) {
+        //   console.log(req.query);
+        //   const { username, passwd } = req.query
+        //   console.log('====================================');
+        //   console.log(username, passwd);
+        //   console.log('====================================');
+        //   if (username == 'qiuhang' && passwd == '123') {
+        //     res.json({
+        //       code: 0,
+        //       token: 'token-' + (new Date().getTime() + 1000 * 60)
+        //     })
+        //   } else {
+        //     res.json({
+        //       code: 1,
+        //       message: "用户名或者密码错误"
+        //     })
+        //   }
+        // });
         //保护接口的中间件
         function auth (req, res, next) {
-
           if (req.headers.token) {
             next()
           } else {
@@ -54,9 +69,9 @@ module.exports = {
           }
         }
         // 访问这个接口之前,必须auth认证,后台接口级别的保护
-        app.get("/api/userinfo", auth, function (req, res) {
-          res.json({ code: 1, data: { name: "tom,age:20" } })
-        })
+        // app.get("/api/userinfo", auth, function (req, res) {
+        //   res.json({ code: 1, data: { name: "tom,age:20" } })
+        // })
 
         app.get("/api/goods", function (req, res) {
           res.json({
@@ -86,42 +101,42 @@ module.exports = {
                   title: "Vue2.x实战",
                   price: "100",
                   img: "/img/01.jpg",
-                  count: 100
+                  count: 231
                 },
                 {
                   id: 2,
                   title: "React16.x实战",
                   price: "120",
                   img: "/img/03.jpg",
-                  count: 100
+                  count: 436
                 },
                 {
                   id: 3,
                   title: "nodejs实战",
                   price: "80",
                   img: "/img/02.jpg",
-                  count: 100
+                  count: 845
                 },
                 {
                   id: 4,
                   title: "前端工程化",
                   price: "110",
                   img: "/img/04.jpg",
-                  count: 100
+                  count: 3453
                 },
                 {
                   id: 5,
                   title: "面试",
                   price: "200",
                   img: "/img/02.jpg",
-                  count: 100
+                  count: 756
                 },
                 {
                   id: 6,
                   title: "前端安全",
                   price: "30",
                   img: "/img/05.jpg",
-                  count: 100
+                  count: 879
                 }
               ],
               python: [
@@ -130,28 +145,28 @@ module.exports = {
                   title: "Python基础语法",
                   price: "120",
                   img: "/img/03.jpg",
-                  count: 101
+                  count: 614
                 },
                 {
                   id: 8,
                   title: "Flask实战",
                   price: "80",
                   img: "/img/02.jpg",
-                  count: 100
+                  count: 765
                 },
                 {
                   id: 9,
                   title: "Django实战",
                   price: "110",
                   img: "/img/01.jpg",
-                  count: 100
+                  count: 678
                 },
                 {
                   id: 10,
                   title: "Python语法进阶",
                   price: "200",
                   img: "/img/04.jpg",
-                  count: 100
+                  count: 253
                 }
               ],
               java: [
@@ -160,21 +175,21 @@ module.exports = {
                   title: "java入门实战",
                   price: "80",
                   img: "/img/02.jpg",
-                  count: 100
+                  count: 568
                 },
                 {
                   id: 12,
                   title: "spring boot实战",
                   price: "110",
                   img: "/img/01.jpg",
-                  count: 100
+                  count: 253
                 },
                 {
                   id: 13,
                   title: "Java高并发",
                   price: "30",
                   img: "/img/04.jpg",
-                  count: 100
+                  count: 568
                 }
               ],
               bigdata: [
@@ -183,21 +198,21 @@ module.exports = {
                   title: "大数据实战",
                   price: "200",
                   img: "/img/01.jpg",
-                  count: 100
+                  count: 345
                 },
                 {
                   id: 15,
                   title: "Hadoop实战",
                   price: "120",
                   img: "/img/03.jpg",
-                  count: 100
+                  count: 786
                 },
                 {
                   id: 16,
                   title: "Kafka平台",
                   price: "80",
                   img: "/img/02.jpg",
-                  count: 100
+                  count: 123
                 }
               ],
               ai: [
@@ -206,36 +221,20 @@ module.exports = {
                   title: "算法实战",
                   price: "100",
                   img: "/img/01.jpg",
-                  count: 100
+                  count: 696
                 },
                 {
                   id: 18,
                   title: "个性化推荐",
                   price: "120",
                   img: "/img/03.jpg",
-                  count: 100
+                  count: 354
                 },
-                {
-                  id: 19,
-                  title: "机器学习",
-                  price: "80",
-                  img: "/img/02.jpg",
-                  count: 100
-                },
-                {
-                  id: 20,
-                  title: "AI实战",
-                  price: "110",
-                  img: "/img/05.jpg",
-                  count: 100
-                }
               ]
             },
             keys: ["fe", "python", "java", "bigdata", "ai"]
           });
         });
-
-
       }
     }
   },

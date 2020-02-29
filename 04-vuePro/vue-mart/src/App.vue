@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
+      <!-- <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>|
-      <router-link :to="{name:'login'}">Login</router-link>
+      <router-link :to="{name:'login'}">Login</router-link> -->
       <br>
       <button v-if="$store.state.isLogin"
               @click="logout">注销</button>

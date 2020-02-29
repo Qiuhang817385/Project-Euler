@@ -5,7 +5,7 @@
          :key="item.id">
       <router-link :to="`/detail/${item.id}`">
         <div class="left">
-          <img :src="item.img"
+          <img src="item.img"
                alt
                @click.stop.prevent="imgPreview(item.img)">
         </div>

@@ -10,7 +10,7 @@
                 @validate="haneldValidate">
     </cube-form>
     <hr>
-    <button @click="clickH">toast按钮</button>
+    <!-- <button @click="clickH">toast按钮</button> -->
   </div>
 </template>
 
@@ -71,14 +71,33 @@ export default {
       console.log("请求");
       this.$store.dispatch('login', this.model)
         .then((code) => {
+          console.log("code", code);
+
           if (!code) {
-            console.log(code);
+            console.log("code", code);
             // 登录成功
             // 拿到会跳地址再做重定向,如果没有,那么回到首页
             console.log("this.$router", this.$router);
             console.log("this.$route", this.$route);
-            const path = this.$route.query.redirect || '/';
-            this.$router.push(path);
+
+            const toast = this.$createToast({
+              time: 1300,
+              txt: "成功",
+              type: "correct",
+              onTimeout: () => {
+                const path = this.$route.query.redirect || '/';
+                this.$router.push(path);
+              }
+            });
+            toast.show();
+
+          } else {
+            const toast = this.$createToast({
+              time: 1300,
+              txt: "登录失败,用户名或者密码错误",
+              type: "error"
+            });
+            toast.show()
           }
         })
         .catch(error => {
