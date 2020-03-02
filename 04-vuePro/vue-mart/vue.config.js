@@ -11,6 +11,15 @@ module.exports = {
   //     target: ""
   //   }
   // },
+  // devServer: {
+  //   proxy: {
+  //     "/": {
+  //       target: "http://www.qiuhang.club:7300/mock/5e5a17e700fbdf09dcf21f8e/mart",
+  //       ws: true,
+  //       changeOrigin: true
+  //     }
+  //   }
+  // },
   css: {
     loaderOptions: {
       stylus: {

@@ -5,19 +5,24 @@
          :key="item.id">
       <router-link :to="`/detail/${item.id}`">
         <div class="left">
-          <img src="item.img"
+          <img :src="getItemURL(item.img)"
                alt
                @click.stop.prevent="imgPreview(item.img)">
         </div>
         <div class="right">
           <div class="title">{{item.title}}</div>
+          <span>Count:{{item.count}}</span>
           <div class="info">
-            <span>{{item.count}}人购买</span>
             <i class="cubeic-add"
                @click.stop.prevent="addCart($event, item)"></i>
           </div>
         </div>
+        <!-- https://blog.csdn.net/zuorishu/article/details/84992194
+        但是打包还是没有解决
+        解决办法,使用了http服务器模块
+         -->
       </router-link>
+      <!-- {{data}} -->
     </div>
   </div>
 </template>
@@ -30,12 +35,30 @@ export default {
       this.$store.commit("addcart", item);
       this.$emit('cartanim', event.target)
     },
+    // 图片预览
     imgPreview (img) {
+      let newImg = this.getItemURL(img);
       this.$createImagePreview({
-        imgs: [img]
+        imgs: [newImg]
       }).show();
+    },
+    getItemURL (url) {
+      // console.log(url);
+      // /img/01.jpg
+      return require("@/assets" + url);
+
     }
-  }
+  },
+  data () {
+    return {
+      baseUrl: process.env.BASE_URL,
+    }
+  },
+  computed: {
+    // fullUrl:function(){
+    //   return `${this.baseUrl}`
+    // }
+  },
 };
 </script>
 

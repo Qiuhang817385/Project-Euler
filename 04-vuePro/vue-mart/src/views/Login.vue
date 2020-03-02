@@ -16,6 +16,11 @@
 
 <script>
 export default {
+  mounted () {
+    this.$message.config({
+      top: `200px`,
+    });
+  },
   data () {
     return {
       model: {
@@ -80,35 +85,38 @@ export default {
             console.log("this.$router", this.$router);
             console.log("this.$route", this.$route);
 
-            const toast = this.$createToast({
-              time: 1300,
-              txt: "成功",
-              type: "correct",
-              onTimeout: () => {
-                const path = this.$route.query.redirect || '/';
-                this.$router.push(path);
-              }
-            });
-            toast.show();
+            this.$message
+              .loading('正在登陆..', 1.3)
+              .then(() => {
+                this.$message.success('登陆成功', 1).then(() => {
+                  const path = this.$route.query.redirect || '/';
+                  this.$router.push(path);
+                })
+              });
+
 
           } else {
-            const toast = this.$createToast({
-              time: 1300,
-              txt: "登录失败,用户名或者密码错误",
-              type: "error"
-            });
-            toast.show()
+            // const toast = this.$createToast({
+            //   time: 1300,
+            //   txt: "登录失败,用户名或者密码错误",
+            //   type: "error"
+            // });
+            // toast.show()
+            this.$message
+              .error('登录失败,用户名或者密码错误', 1);
           }
         })
         .catch(error => {
           console.log('错误');
           // 用户名或者密码错误
-          const toast = this.$createToast({
-            time: 1300,
-            txt: error.message || error.response.data.message || "登录失败",
-            type: "error"
-          });
-          toast.show()
+          // const toast = this.$createToast({
+          //   time: 1300,
+          //   txt: error.message || error.response.data.message || "登录失败",
+          //   type: "error"
+          // });
+          // toast.show()
+          this.$message
+            .error('登录失败,用户名或者密码错误', 1);
         })
       e.preventDefault();
     },

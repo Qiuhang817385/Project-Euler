@@ -1,8 +1,9 @@
 <template>
   <div class="home">
-    <!-- <kHeader title="你好">
+    <kHeader title="Back">
       <i class="cubeic-tag"></i>
     </kHeader>
+    <!--
     <img alt="Vue logo"
          src="../assets/logo.png"> -->
     <!-- 轮播图 -->
@@ -11,7 +12,7 @@
       <cube-slide-item v-for="(item,index) in slider"
                        :key="index">
         <router-link :to="'/detail/${item.id}'">
-          <img :src="item.img"
+          <img :src="getItemURL(item.img)"
                alt=""
                class="slider">
         </router-link>
@@ -46,7 +47,13 @@ export default {
     ...mapGetters(['goods'])
   },
   methods: {
-    ...mapActions(['getGoods'])
+    ...mapActions(['getGoods']),
+    getItemURL (url) {
+      console.log(url);
+      // /img/01.jpg
+      return require("@/assets" + url);
+
+    }
   },
   created () {
     this.getGoods()

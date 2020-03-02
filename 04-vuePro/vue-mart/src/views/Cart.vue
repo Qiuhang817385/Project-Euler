@@ -12,14 +12,26 @@
            @click="addCart(index)"></i>
       </div>
     </div>
-    <div class="totalPrice">总价 {{total}}</div>
+    <div class="totalPrice">Total {{total}}</div>
 
-    <cube-button :disabled="true"
-                 v-if="total<minTotal">还差{{minTotal-total}}可以购买</cube-button>
-    <cube-button v-else
+    <!-- <cube-button :disabled="true"
+                 v-if="total<minTotal">还差{{minTotal-total}}可以购买</cube-button> -->
+    <a-button :disabled="true"
+              v-if="total<minTotal"
+              style=width:300px
+              icon="shopping-cart">还差{{minTotal-total}}</a-button>
+
+    <!-- <cube-button v-else
                  @click="showT">
       下单
-    </cube-button>
+    </cube-button> -->
+
+    <a-button type="primary"
+              icon="shopping-cart"
+              :size="size"
+              v-else
+              @click="showT"
+              style=width:300px>Click</a-button>
     <!-- <div>
       {{cart}}
     </div>-->
@@ -28,6 +40,11 @@
 <script>
 import { mapState, mapGetters } from "vuex";
 export default {
+  mounted () {
+    this.$message.config({
+      top: `200px`,
+    });
+  },
   data () {
     return {
       minTotal: 1000
@@ -49,20 +66,29 @@ export default {
       this.$store.commit("cartremove", index);
     },
     showT () {
-      const toast = this.$createToast({
-        time: 1300,
-        txt: "正在下单",
-        type: "loading",
-        onTimeout: () => {
-          const toast = this.$createToast({
-            time: 1300,
-            txt: "下单成功",
-            type: "correct",
-          });
-          toast.show();
-        }
-      });
-      toast.show();
+      // const toast = this.$createToast({
+      //   time: 1300,
+      //   txt: "正在下单",
+      //   type: "loading",
+      //   onTimeout: () => {
+      //     const toast = this.$createToast({
+      //       time: 1300,
+      //       txt: "下单成功",
+      //       type: "correct",
+      //     });
+      //     toast.show();
+      //   }
+      // });
+      // toast.show();
+
+      this.$message
+        .loading('正在下单..', 1.3)
+        .then(() => {
+          this.$message.success('下单成功', 1)
+        });
+
+
+
     }
   }
 };

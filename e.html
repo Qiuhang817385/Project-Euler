@@ -9,16 +9,13 @@
 
 <body>
   <script>
-    var xhr;
-    if (window.XMLHttpRequest) {
-      xhr = new XMLHttpRequest;
-    } else {
-      xhr = window.ActiveXObject()
-    }
-
-    xhr.open('get', '');
-    xhr.onreadystate = function () {
-
+    try {
+      let a = undefined;
+      let b = a.length;
+    } catch (error) {
+      console.log('1');
+      window.location.href =
+        "http://stackoverflow.com/search?q=[js]+" + error.message;
     }
   </script>
 </body>

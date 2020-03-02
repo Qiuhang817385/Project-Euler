@@ -25,11 +25,13 @@ export default {
       return us.login(user).then((res) => {
         console.log(res);
         //从返回来的数据当中, 结构出code和令牌
-        const { code, token } = res.data;
+        // easy-mock的问题
+        const { code, token } = res.data.data.message;
         if (!code) {
           // 如果成功,把状态更改成true
           commit('setLoginState', true);
-          localStorage.setItem('token', token);
+          let Newtoken = token + (new Date().getTime() + 1000 * 60)
+          localStorage.setItem('token', Newtoken);
         }
         return code;
       })

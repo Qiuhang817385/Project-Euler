@@ -4,6 +4,8 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Cart from '../views/Cart.vue'
 
+import Detail from '../components/Detail.vue'
+
 import History from '../utils/history'
 // vimp
 Vue.use(VueRouter)
@@ -43,6 +45,12 @@ const routes = [
     path: '/cart',
     name: "cart",
     component: Cart
+  },
+  {
+    path: '/detail/:id',
+    name: "cart",
+    component: Detail,
+    props: true
   }
 ]
 
