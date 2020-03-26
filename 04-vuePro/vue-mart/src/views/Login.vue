@@ -11,6 +11,7 @@
     </cube-form>
     <hr>
     <!-- <button @click="clickH">toast按钮</button> -->
+    <van-button type="default">默认按钮</van-button>
   </div>
 </template>
 

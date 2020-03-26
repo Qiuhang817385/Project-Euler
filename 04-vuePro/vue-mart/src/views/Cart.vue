@@ -28,7 +28,6 @@
 
     <a-button type="primary"
               icon="shopping-cart"
-              :size="size"
               v-else
               @click="showT"
               style=width:300px>Click</a-button>
@@ -86,9 +85,6 @@ export default {
         .then(() => {
           this.$message.success('下单成功', 1)
         });
-
-
-
     }
   }
 };

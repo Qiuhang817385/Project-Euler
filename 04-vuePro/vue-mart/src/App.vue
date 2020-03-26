@@ -117,13 +117,14 @@ export default {
   .cube-tab
     position relative
   span.badge
+    display block
     background red
     color white
     border-radius 50%
     padding 2px
-    min-width 16px
-    min-height 16px
+    width 20px
+    height 20px
     position absolute
-    right 25%
+    right 30%
     top 0
 </style>
