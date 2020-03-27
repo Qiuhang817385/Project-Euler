@@ -1,11 +1,6 @@
 <template>
   <div class="about">
     <van-divider />
-    <!-- <van-row gutter="20">
-      <van-col span="7"></van-col>
-      <van-col span="7">欢迎回来</van-col>
-      <van-col span="7"></van-col>
-    </van-row> -->
     <h1>欢迎回来</h1>
     <van-divider />
     <article style="text-align:left">
@@ -26,8 +21,6 @@
         </div>
       </div>
     </div>
-    <!-- <a-button type="primary"
-              @click="handleLogout()">注销</a-button> -->
     <div class="bottom">
       <a-button type="primary"
                 @click="handleLogout">注销</a-button>
@@ -48,12 +41,6 @@ export default {
       top: `200px`,
     });
     this.date = new Date().toLocaleString()
-    // this.$notification.open({
-    //   message: '现在时间：',
-    //   description:
-    //     `${new Date().toLocaleString()}`,
-    //   icon: <a-icon type="smile" style="color: #108ee9" />,
-    // });
     setTimeout(() => {
       this.shows = false
     }, 4500)

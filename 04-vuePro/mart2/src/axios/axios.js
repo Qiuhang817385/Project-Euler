@@ -5,8 +5,7 @@ const axios = require('axios');
 
 export default function (vm) {
   axios.interceptors.request.use(config => {
-    console.log("config", config);
-
+    // console.log("config", config);
     const token = localStorage.getItem('token');
     if (token) {
       // 这样直接设置token不规范

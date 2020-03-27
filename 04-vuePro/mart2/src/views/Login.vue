@@ -4,11 +4,6 @@
     从服务器把表单的数据返回回来,动态生成表单的内容,答题程序
     单选问答?
     -->
-    <!-- <cube-form  :model="model"
-                :schema="schema"
-                @submit="handleLogin"
-                @validate="haneldValidate">
-    </cube-form> -->
     <img width="100"
          height="100"
          src="../assets/logo.png" />
@@ -26,11 +21,20 @@
                  placeholder="密码"
                  @touchstart.stop="show = true"
                  :rules="[{ required: true, message: '请填写密码' }]" />
+      <van-field v-model="phone"
+                 name="手机号"
+                 label="手机号"
+                 placeholder="手机号"
+                 :rules="[{ required: true, message: '请填写手机号' }]" />
       <van-field v-model="sms"
                  center
                  clearable
                  label="短信验证码"
-                 placeholder="请输入短信验证码">
+                 placeholder="请输入短信验证码"
+                 ref="sms"
+                 :rules="[{ required: true, message: '请输入短信验证码' }]"
+                 v-on:touchstart.native="ontouchstart"
+                 v-on:touchend.native="ontouchend">
         <template #button>
           <van-button size="small"
                       type="primary"
@@ -52,6 +56,7 @@
       弹出默认键盘
     </van-button> -->
     <!-- 键盘 -->
+    <!-- 一个键盘绑定一个输入框???,应该是这个password是一个变量 -->
     <van-number-keyboard :show="show"
                          v-model="password"
                          extra-key="."
@@ -60,9 +65,17 @@
                          @input="onInput"
                          @delete="onDelete" />
     <!-- 剪切板 -->
+    <!-- 复制 -->
     <van-action-sheet v-model="show2"
-                      :actions="actions"
-                      @select="onSelect" />
+                      :actions="actions2"
+                      @select="onSelect2" />
+    <!-- 粘贴 -->
+    <van-action-sheet v-model="show3"
+                      :actions="actions3"
+                      @select="onSelect3" />
+    <!-- 
+      
+     -->
   </div>
 
 </template>
@@ -72,63 +85,159 @@ import { Image } from 'vant';
 import { Toast } from 'vant';
 export default {
   created () {
+    // console.log("this.$refs.sms", this.$refs.sms)
   },
   mounted () {
     this.$message.config({
       top: `200px`,
     });
-
+    this.$refs.sms.onClick = function (e) {
+      console.log(e)
+    }
   },
   data () {
     return {
+      phone: '',
       sms: '',
       value: '',
       username: '',
       password: '',
       show: false,
       show2: false,
-      actions: [
+      show3: false,
+      actions2: [
         { name: '复制' },
         { name: '剪切板' }
-      ]
+      ],
+      actions3: [
+        { name: '粘贴' }
+      ],
+      vNumber: ''
     }
   },
   methods: {
-    onSelect (item) {
+    showKeyboard (e) {
+      console.log(e)
+      console.log(this)
+      console.log(this.$refs.pwd.type)
+    },
+    ontouchend () {
+      clearTimeout(this.timer)
+    },
+    ontouchstart () {
+      // 模拟长按事件
+      this.timer = setTimeout(() => {
+        // console.log(1232);
+        this.show3 = true
+      }, 1000)
+    },
+    ddd () {
+
+    },
+    // 封装起来的发送手机验证码函数
+    sendVerify (number) {
+      let results = this.$store.dispatch('sendSms', number);
+      return results.then((tips) => {
+        // console.log(tips)
+        // 验证码数字
+        let reg = /\d+/g;
+        let code = reg.exec(tips);
+        // 提示文本
+        return { tips, code }
+      })
+    },
+    // 封装起来的校验方法
+    validateAll (parms, data) {
+      // params.方法1,params,方法2
+      let willValidata = {
+        username: (x) => {
+          console.log(x)
+        },
+        pwd: (x) => {
+          console.log(x)
+        },
+        phoneNumber: (x) => {
+          console.log(typeof x);
+          x = parseInt(x)
+          console.log(x)
+          let reg = /^1[3-8][0-9]{9}$/;
+          console.log(reg.test(x))
+          return reg.test(x);
+        }
+      }
+      // 表结构校验
+      return willValidata[parms](data)
+    },
+    onSelect2 (e, item) {
       // 默认情况下点击选项时不会自动收起
       // 可以通过 close-on-click-action 属性开启自动收起
-      console.log(this)
+      console.log(this.vNumber)
+      console.log(e)
+      console.log(item)
       this.show2 = false;
       Toast('复制成功');
+    },
+    onSelect3 (e, item) {
+      // console.log(this.vNumber)
+      // console.log(e)
+      // console.log(item)
+      // this.show2 = false;
+      // Toast('复制成功');
+      this.show3 = false;
+      this.sms = this.vNumber;
+
     },
     sendSMS (e) {
       // 只有这个this是本身的this
       // 直接再created当中设置this的话，哪个this到了这一层就变成了window
-      let ssss = this;
-      e.target.disabled = true;
-      let i = 60;
-      let timer = setInterval(() => {
-        if (i === 0 || i == 54) {
-          e.target.innerText = `发送验证码`
-          e.target.disabled = false;
-          clearInterval(timer);
-          this.$notify({
-            type: 'success',
-            message: '您的验证码为：654321',
-            onClick: function () {
-              console.log(this)
-              console.log(ssss)
-              // console.log('1232421')
-              ssss.show2 = true
-              // console.log(self)
-            }
-          });
+      // 1.获取电话号码
+      // 2.获取对电话号码校验,封装成校验规则;
+      console.log('登录??什么鬼')
+      let fes = this.validateAll('phoneNumber', this.phone);
+      if (fes) {
+        console.log('发送呢')
+        // 正常逻辑是无论是否发送成功,都要禁用1分钟
+        this.sendVerify(1232312).then((result) => {
+          let { tips, code } = result;
+          // 这里是直接赋值了,其实不应该这么做的,应该是点击复制的时候把值拿出来
+          // 这里是直接赋值了,其实不应该这么做的,应该是点击复制的时候把值拿出来
+          // 可以封装到本身的data当中进行管理
+          // 可以封装到本身的data当中进行管理
+          // 可以封装到本身的data当中进行管理
+          this.vNumber = code[0]
+          console.log(tips, code[0]);
+          // 模拟3秒后收到验证码
+          setTimeout(() => {
+            this.$notify({
+              type: 'success',
+              message: tips,
+              duration: 5000,
+              onClick: function () {
+                vueCom.show2 = true;
+              }
+            });
+          }, 3000)
+        });
 
-        }
-        e.target.innerText = `${i}S后重新发送`
-        i--;
-      }, 1000)
-      console.log()
+        let vueCom = this;
+        e.target.disabled = true;
+        let i = 60;
+        let timer = setInterval(() => {
+          if (i === 0) {
+            e.target.innerText = `发送验证码`
+            e.target.disabled = false;
+            clearInterval(timer);
+          } else {
+            e.target.innerText = `${i}S后重新发送`
+            i--;
+          }
+        }, 1000)
+      } else {
+        this.$notify({
+          type: 'error',
+          message: '手机号错误',
+        });
+      }
       // console.log(this)
     },
     onSubmit (values) {
@@ -165,20 +274,12 @@ export default {
         })
       // e.preventDefault();
     },
+    // 这是小键盘事件,可以做校验
     onInput (value) {
       // Toast(value);
     },
     onDelete () {
       // Toast('删除');
-    },
-    // 登录
-    handleLogin (e) {
-
-    },
-    // 校验,校验结果
-    haneldValidate (result) {
-      console.log(result);
-
     },
     clickH () {
       const toast = this.$createToast({

@@ -6,7 +6,6 @@
       <i class="cubeic-tag"></i>
     </kHeader> -->
       <!-- 轮播图 -->
-
       <van-notice-bar color="#1989fa"
                       background="#fff"
                       left-icon="info-o">
@@ -60,7 +59,7 @@ export default {
   methods: {
     ...mapActions(['getGoods']),
     getItemURL (url) {
-      console.log(url);
+      // console.log(url);
       // /img/01.jpg
       return require("@/assets" + url);
     },

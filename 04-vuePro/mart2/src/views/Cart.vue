@@ -5,7 +5,6 @@
                  left-text="返回"
                  left-arrow
                  @click-left="onClickLeft" />
-
     <!-- card -->
     <div class="good"
          v-for="(item,index) in cart"
