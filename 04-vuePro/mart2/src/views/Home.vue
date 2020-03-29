@@ -2,9 +2,6 @@
   <div class="home">
     <van-pull-refresh v-model="isLoading"
                       @refresh="onRefresh">
-      <!-- <kHeader title="Back">
-      <i class="cubeic-tag"></i>
-    </kHeader> -->
       <!-- 轮播图 -->
       <van-notice-bar color="#1989fa"
                       background="#fff"
