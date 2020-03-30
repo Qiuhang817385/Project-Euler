@@ -3,7 +3,6 @@
     <!-- <HelloWorld /> -->
   </div>
 </template>
-
 <script>
 import a from './components/HelloWorld.vue';
 console.log(a)

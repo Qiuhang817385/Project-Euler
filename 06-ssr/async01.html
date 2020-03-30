@@ -14,9 +14,9 @@ await只能放在async函数里 -->
   <script>
     function 摇色子() {
       return new Promise((resolve, reject) => {
-        let sino = parseInt(Math.random() * 6 + 1)
+        let sino = parseInt(Math.random() * 6 + 1);
         setTimeout(() => {
-          resolve(sino)
+          resolve(sino);
         }, 3000)
       })
     }
