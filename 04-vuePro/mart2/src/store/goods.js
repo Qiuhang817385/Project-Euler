@@ -12,7 +12,6 @@ export default {
       state.slider = slider;
       state.goodsInfo = goodsInfo;
       state.keys = keys
-
     }
   },
   actions: {/* action是编写业务逻辑的地方,相当于控制器,调取业务层service的方法 */
