@@ -8,14 +8,22 @@
 </head>
 
 <body>
+
   <script>
-    try {
-      let a = undefined;
-      let b = a.length;
-    } catch (error) {
-      console.log('1');
-      window.location.href =
-        "http://stackoverflow.com/search?q=[js]+" + error.message;
+    // try {
+    //   let a = undefined;
+    //   let b = a.length;
+    // } catch (error) {
+    //   console.log('1');
+    //   window.location.href =
+    //     "http://stackoverflow.com/search?q=[js]+" + error.message;
+    // }
+    console.time("object");
+    for (var index = 0; index < 5; index++) {
+      setTimeout(() => {
+        console.log(index)
+        console.timeEnd('object')
+      }, 1);
     }
   </script>
 </body>

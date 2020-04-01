@@ -192,10 +192,9 @@ export default {
       // 直接再created当中设置this的话，哪个this到了这一层就变成了window
       // 1.获取电话号码
       // 2.获取对电话号码校验,封装成校验规则;
-      console.log('登录??什么鬼')
       let fes = this.validateAll('phoneNumber', this.phone);
       if (fes) {
-        console.log('发送呢')
+        console.log('正在发送')
         // 正常逻辑是无论是否发送成功,都要禁用1分钟
         this.sendVerify(1232312).then((result) => {
           let { tips, code } = result;
