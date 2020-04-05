@@ -37,7 +37,7 @@ export default class componentName extends Component {
       <div>
         parentNum:{parentNum};
         <br />
-        <button onClick={this.bindClick}>parent点击</button>
+        {/* <button onClick={this.bindClick}>parent点击</button> */}
         <br />
         <Child></Child>
       </div>

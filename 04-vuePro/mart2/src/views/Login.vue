@@ -127,12 +127,8 @@ export default {
     ontouchstart () {
       // 模拟长按事件
       this.timer = setTimeout(() => {
-        // console.log(1232);
         this.show3 = true
       }, 1000)
-    },
-    ddd () {
-
     },
     // 封装起来的发送手机验证码函数
     sendVerify (number) {

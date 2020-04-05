@@ -1,0 +1,19 @@
+.FancyBorder-blue {
+  color: blue;
+}
+
+.FancyBorder-red {
+  color: red;
+}
+
+.left {
+  width: 100px;
+  height: 100px;
+  float: left;
+}
+
+.right {
+  width: 100px;
+  height: 100px;
+  float: right;
+}
