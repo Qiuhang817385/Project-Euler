@@ -166,3 +166,7 @@ Context 主要应用场景在于很多不同层级的组件需要访问同样一
 请谨慎使用，因为这会使得组件的复用性变差。
 如果你只是想避免层层传递一些属性，
 组件组合（component composition）有时候是一个比 context 更好的解决方案。
+
+## 受控组件和非受控组件
+
+https://goshakkk.name/controlled-vs-uncontrolled-inputs-react/

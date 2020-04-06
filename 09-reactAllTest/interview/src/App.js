@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+// import 'antd/dist/antd.css';
 import './App.css';
 import './a.scss';
 import Header from './component/Header.js'
@@ -9,7 +10,9 @@ import FancyBorder from './component/comtest/FancyBorder';
 import WelcomeDialog from './component/comtest/WelcomeDialog'
 import NameForm from './component/nameForm/NameForm'
 import NameForm2 from './component/nameForm/NameForm2'
-import Calculator from './component/boilingVerdict/Calculator'
+import Calculator from './component/boilingVerdict/Calculator';
+import HookTest from './component/hookTest/HookTest'
+import Friend from './component/hookTest/Friend'
 function App () {
   // 3
   const [a, setA] = useState("dark");
@@ -24,6 +27,10 @@ function App () {
   }
   return (
     <div className="App">
+      <h1 style={{ margin: "0 auto" }}>effectHook</h1>
+      {/* <HookTest></HookTest> */}
+      <Friend></Friend>
+      <hr />
       <h1 style={{ margin: "0 auto" }}>受控组件</h1>
       <NameForm></NameForm>
       <br />

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <style type="text/css">
+    #div1 {
+      width: 300px;
+      height: 300px;
+      border: 1px solid red;
+    }
+  </style>
+</head>
+<!-- 用原生js写绿灯显示3秒黄灯1秒红灯2秒 并且循环显示 -->
+
+<body>
+  <div id="div1">
+
+  </div>
+  <!-- 绿:3S
+			黄:1S
+			红灯:2S
+		 -->
+  <!-- 回调地狱 -->
+  <script type="text/javascript">
+    let div1 = document.getElementById('div1');
+    let g1, y2, g3;
+
+    function Foo() {
+      console.time('green')
+      div1.style.backgroundColor = 'green';
+      clearTimeout(g1)
+      g1 = setTimeout(() => {
+        console.timeEnd('green')
+        console.time('yellow')
+        div1.style.backgroundColor = 'yellow';
+        clearTimeout(y2)
+        y2 = setTimeout(() => {
+          console.timeEnd("yellow")
+          console.time('red')
+          div1.style.backgroundColor = 'red';
+          clearTimeout(g3)
+          g3 = setTimeout(() => {
+            console.timeEnd("red")
+            div1.style.backgroundColor = 'green';
+          }, 2000)
+        }, 1000)
+      }, 3000)
+    }
+    Foo();
+    setInterval(() => {
+      Foo();
+    }, 6000)
+  </script>
+</body>
+
+</html>

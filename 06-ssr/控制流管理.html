@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 如果有一个多步操作非常耗时，采用回调函数，可能会写成下面这样。
+    // step1(function (value1) {
+    //   step2(value1, function (value2) {
+    //     step3(value2, function (value3) {
+    //       step4(value3, function (value4) {
+    //         // Do something with value4
+    //       });
+    //     });
+    //   });
+    // });
+    // 采用 Promise 改写上面的代码
+    // Promise.resolve(step1)
+    //   .then(step2)
+    //   .then(step3)
+    //   .then(step4)
+    //   .then(function (value4) {
+    //     // Do something with value4
+    //   }, function (error) {
+    //     // Handle any error from step1 through step4
+    //   })
+    //   .done();
+
+    // Generator 函数可以进一步改善代码运行流程。
+    // function* longRunningTask(value1) {
+    //   try {
+    //     var value2 = yield step1(value1);
+    //     var value3 = yield step2(value2);
+    //     var value4 = yield step3(value3);
+    //     var value5 = yield step4(value4);
+    //     // Do something with value4
+    //   } catch (e) {
+    //     // Handle any error from step1 through step4
+    //   }
+    // }
+  </script>
+</body>
+
+</html>

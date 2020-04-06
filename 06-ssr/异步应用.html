@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  异步编程的方法
+
+  Promise 对象
+  回调函数
+  事件监听
+  发布/订阅
+
+  为什么 Node 约定，回调函数的第一个参数，必须是错误对象err（如果没有错误，该参数就是null）？
+  <script>
+    // fs.readFile('/etc/passwd', 'utf-8', function (err, data) {
+    //   if (err) throw err;
+    //   console.log(data);
+    // });
+    // 原因是执行分成两段，第一段执行完以后，任务所在的上下文环境就已经结束了。
+    // 在这以后抛出的错误，原来的上下文环境已经无法捕捉，只能当作参数，传入第二段。
+
+    /* 
+      因为多个异步操作形成了强耦合，只要有一个操作需要修改，
+      它的上层回调函数和下层回调函数，可能都要跟着修改。
+      这种情况就称为"回调函数地狱"（callback hell）
+
+      异步操作出现强耦合--->修改一个都要修改,回调地狱
+     */
+  </script>
+</body>
+
+</html>
