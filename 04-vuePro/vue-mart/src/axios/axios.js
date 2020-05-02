@@ -11,6 +11,7 @@ export default function (vm) {
     if (token) {
       // 这样直接设置token不规范
       // config.headers.token = token;
+	  
       // 这样才是正确规范
       config.headers.Authorization = 'Bearer ' + token;
     }

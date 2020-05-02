@@ -1,17 +1,33 @@
 import React from 'react';
-import { useThemesContext, themes } from '../../context';
+import { ThemeContext, useThemesContext, themes } from '../../context';
 import Toolbar from './Toolbar'
+import Header from '../Header.js'
 export default class Apps extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       theme: themes.light,
+      a: "dark"
     };
     this.toggleTheme = () => {
       this.setState(state => ({
         theme: state.theme === themes.dark ? themes.light : themes.dark,
       }));
     };
+  }
+
+  // 4
+  handclick = () => {
+    // OK实验成功,所有的子组件都可以被渲染掉
+    if (this.state.a === 'dark') {
+      this.setState({
+        a: "light"
+      })
+    } else {
+      this.setState({
+        a: "dark"
+      })
+    }
   }
   render () {
     // 在 ThemeProvider 内部的 ThemedButton 按钮组件使用 state 中的 theme 值，
@@ -27,6 +43,10 @@ export default class Apps extends React.Component {
         <div>
           <Toolbar />
         </div>
+        <button onClick={this.handclick}>点击切换主题</button>
+        <ThemeContext.Provider value={this.state.a}>
+          <Header></Header>
+        </ThemeContext.Provider>
       </>
     );
   }

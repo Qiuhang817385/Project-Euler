@@ -8,7 +8,6 @@ export default class Calculator extends React.Component {
       temperature: '',
       scale: 'c'
     }
-
   }
   handleChange = (e) => {
     this.setState({
@@ -24,6 +23,7 @@ export default class Calculator extends React.Component {
     this.setState({ scale: 'f', temperature });
   }
   render () {
+    console.log('this.props :', this);
     const { scale, temperature } = this.state;
     // 转换,输入华氏转成摄氏
     // const celsius = scale==='f'? 转换成摄氏 : 摄氏

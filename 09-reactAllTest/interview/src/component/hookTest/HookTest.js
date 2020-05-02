@@ -207,11 +207,8 @@ useEffect(() => {
   };
 }, [props.friend.id]); // 仅在 props.friend.id 发生变化时，重新订阅
 
-
 如果想执行只运行一次的 effect（仅在组件挂载和卸载时执行），可以传递一个空数组（[]）作为第二个参数。
  */
-
-
 //  总结
 /*
   useEffect:
