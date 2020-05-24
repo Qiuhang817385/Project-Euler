@@ -110,6 +110,45 @@ const Fetch = (props) => {
   return props.children(user)
 }
 
+/**
+ * 过滤操作
+ */
+function Filter ({ children, type }) {
+  return (
+    <div>
+      {
+        React.Children.map(children, child => {
+          // 过滤掉非P的标签
+          if (child.type !== type) {
+            return;
+          }
+          return child;
+        })
+      }
+    </div>
+  )
+}
+/**
+ * RadioGroup组件
+ */
+function Radio ({ children, ...rest }) {
+  return <label>
+    <input type="radio" {...rest} />
+    {children}
+  </label>
+}
+// 拓展这个题  加上事件?????
+function RadioGroup (props) {
+  return (
+    <div>
+      {
+        React.Children.map(props.children, child => {
+          return React.cloneElement(child, { name: props.name })
+        })
+      }
+    </div>
+  )
+}
 
 function App () {
   return (
@@ -135,6 +174,18 @@ function App () {
           )
         }
       </Fetch>
+      <hr />
+      <h2>过滤器</h2>
+      <Filter type="p">
+        <h1>react</h1>
+        <p>这是p标签</p>
+      </Filter>
+      <h2>标签</h2>
+      <RadioGroup name="mvvm">
+        <Radio value="vue">vue</Radio>
+        <Radio value="react">react</Radio>
+        <Radio value="re">re</Radio>
+      </RadioGroup>
     </>
   );
 }
