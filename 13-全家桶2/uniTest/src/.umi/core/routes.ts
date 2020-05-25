@@ -16,9 +16,14 @@ const routes = [
     "path": "/users",
     "routes": [
       {
-        "path": "/users/$id",
+        "path": "/users",
         "exact": true,
-        "component": require('@/pages/users/$id.js').default
+        "component": require('@/pages/users/index.js').default
+      },
+      {
+        "path": "/users/:id",
+        "exact": true,
+        "component": require('@/pages/users/[id].js').default
       }
     ],
     "component": require('@/pages/users/_layout.js').default
