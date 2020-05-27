@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Tag, Button, Space, Popconfirm, message } from 'antd';
+import ProTable, {
+  ProColumns,
+  TableDropdown,
+  ActionType,
+} from '@ant-design/pro-table';
 import { connect } from 'umi';
+
 import UserModal from './components/UserModal';
 
 function index(props) {
@@ -16,7 +22,7 @@ function index(props) {
       console.log('edit');
       id = records.id;
       props.dispatch({
-        type: 'users/edit',
+        type: 'prousers/edit',
         payload: values,
         // 第二种写法
         //  payload: {...values,id},
@@ -24,7 +30,7 @@ function index(props) {
     } else {
       console.log('add');
       props.dispatch({
-        type: 'users/add',
+        type: 'prousers/add',
         payload: values,
       });
     }
@@ -39,7 +45,7 @@ function index(props) {
       id = records.id;
     }
     props.dispatch({
-      type: 'users/delete',
+      type: 'prousers/delete',
       payload: { id },
       // 第二种写法
       //  payload: {...values,id},
@@ -109,9 +115,9 @@ function index(props) {
   return (
     <div className="list-table">
       <Button type="primary" onClick={add}>
-        添加
+        Pro添加
       </Button>
-      <Table columns={columns} dataSource={props.users.data} />
+      <Table columns={columns} dataSource={props.prousers.data} />
       <UserModal
         modalVisibal={modalVisibal}
         // 这个函数一般可以提取到上面
@@ -125,6 +131,9 @@ function index(props) {
   );
 }
 
-const mapStateToProps = state => state;
+const mapStateToProps = state => {
+  console.log('state', state);
+  return state;
+};
 
 export default connect(mapStateToProps)(index);

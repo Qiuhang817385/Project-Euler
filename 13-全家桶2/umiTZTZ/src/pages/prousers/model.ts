@@ -26,7 +26,7 @@ interface UserState {
   };
 }
 interface UserModelType {
-  namespace: 'users';
+  namespace: 'prousers';
   // state: [];
   state: UserState;
   reducers: {
@@ -43,7 +43,7 @@ interface UserModelType {
   };
 }
 const UserModel: UserModelType = {
-  namespace: 'users',
+  namespace: 'prousers',
   // 这里的结构类型定义成对象的话,那么返回的时候就是一个对象的形式数据
   state: {},
   effects: {
@@ -97,7 +97,7 @@ const UserModel: UserModelType = {
       // 正确完整的写法
       // https://github.com/ReactTraining/history/blob/master/docs/GettingStarted.md
       return history.listen(({ pathname }) => {
-        if (pathname === '/users') {
+        if (pathname === '/prousers') {
           dispatch({
             type: 'getRemote',
           });
