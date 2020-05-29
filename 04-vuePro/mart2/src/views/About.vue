@@ -29,7 +29,17 @@
 </template>
 <script>
 import axios from 'axios';
+
+import { Divider } from 'vant';
+
+import { Message, Button } from 'ant-design-vue';
+
 export default {
+  components: {
+    [Divider.name]: Divider,
+    [Button.name]: Button,
+    [Message.name]: Message,
+  },
   data () {
     return {
       shows: true,
@@ -37,7 +47,7 @@ export default {
     }
   },
   mounted () {
-    this.$message.config({
+    Message.config({
       top: `200px`,
     });
     this.date = new Date().toLocaleString()
@@ -51,10 +61,10 @@ export default {
   methods: {
     handleLogout () {
       this.$store.dispatch('logout');
-      this.$message
+      Message
         .loading('正在注销..', 1)
         .then(() => {
-          this.$message.success('注销成功', 1.2).then(() => {
+          Message.success('注销成功', 1.2).then(() => {
             const path = this.$route.query.redirect || '/';
             this.$router.push(path);
           })

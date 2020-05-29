@@ -1,16 +1,15 @@
 // 拦截器的作用,用于拦截请求和响应
 // 提前对请求做处理,在请求头里面添加token
-// 不用再service当中请求
+// 不用在service当中请求
 const axios = require('axios');
 
 export default function (vm) {
+  // 对请求进行拦截
   axios.interceptors.request.use(config => {
-    // console.log("config", config);
     const token = localStorage.getItem('token');
     if (token) {
-      // 这样直接设置token不规范
-      // config.headers.token = token;
-      // 这样才是正确规范
+      // config.headers.token  这样设置token不规范
+      // 正确示例
       config.headers.Authorization = 'Bearer ' + token;
     }
     return config;

@@ -5,8 +5,10 @@ export default {
     cart: JSON.parse(localStorage.getItem("cart")) || []
   },
   mutations: {
+    /**
+     * Home-添加商品Item至购物车
+     */
     addcart (state, item) {
-      // 添加商品至购物车
       const good = state.cart.find(v => v.title == item.title);
       if (good) {
         good.cartCount += 1;
@@ -18,7 +20,17 @@ export default {
       }
       localStorage.setItem('cart', JSON.stringify(state.cart))
     },
-    cartremove (state, index) {
+    /**
+     * Cart-通过索引操作-商品数量+
+     */
+    cartAddByIndex (state, index) {
+      // count+1
+      state.cart[index].cartCount += 1;
+    },
+    /**
+     * Cart-通过索引操作-商品数量-
+     */
+    cartRemoveByIndex (state, index) {
       // count-1
       if (state.cart[index].cartCount < 2) {
         state.cart.splice(index, 1);
@@ -26,13 +38,9 @@ export default {
       } else {
         state.cart[index].cartCount -= 1;
       }
-      // 这里必须是JSON字符串的形式
       localStorage.setItem('cart', JSON.stringify(state.cart))
     },
-    cartadd (state, index) {
-      // count+1
-      state.cart[index].cartCount += 1;
-    }
+
   },
   getters: {
     cartTotal: state => {

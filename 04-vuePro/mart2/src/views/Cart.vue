@@ -39,11 +39,22 @@
 </template>
 <script>
 import { mapState, mapGetters } from "vuex";
+import { NavBar, Card, SubmitBar, Button } from 'vant';
+
+import { Message } from 'ant-design-vue';
+
 export default {
   mounted () {
-    this.$message.config({
+    Message.config({
       top: `200px`,
     });
+  },
+  components: {
+    [NavBar.name]: NavBar,
+    [Card.name]: Card,
+    [SubmitBar.name]: SubmitBar,
+    [Button.name]: Button,
+    // [Message.name]: Message,
   },
   data () {
     return {
@@ -57,9 +68,6 @@ export default {
     ...mapGetters({
       total: "total"
     }),
-    sssa: function () {
-      return ((this.minTotal - this.total) * 100)
-    }
   },
   methods: {
     onClickLeft () {
@@ -70,16 +78,17 @@ export default {
       return require("@/assets" + url);
     },
     addCart (index) {
-      this.$store.commit("cartadd", index);
+      console.log('index', index)
+      this.$store.commit("cartAddByIndex", index);
     },
     removeCart (index) {
-      this.$store.commit("cartremove", index);
+      this.$store.commit("cartRemoveByIndex", index);
     },
     showT () {
-      this.$message
+      Message
         .loading('正在下单..', 1.3)
         .then(() => {
-          this.$message.success('下单成功', 1)
+          Message.success('下单成功', 1);
         });
     }
   }

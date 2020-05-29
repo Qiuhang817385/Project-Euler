@@ -24,32 +24,36 @@ export default {
     // el是dom元素,是被点击的那个+号
     start (el) {// 启动动画接口，传递点击按钮元素
       this.el = el;
-
       // 使.ball显示，激活动画钩子
       this.show = true;
     },
     beforeEnter (el) {
+      // 这里没有执行
       // 把小球移动到点击的dom元素所在位置
       const rect = this.el.getBoundingClientRect();
+      console.log('rect', rect);
+
       // 转换为用于绝对定位的坐标
       const x = rect.left - window.innerWidth / 2;
       const y = -(window.innerHeight - rect.top - 10 - 20);
-
       // ball只移动y
-      el.style.transform = `translate3d(0, ${y}px, 0)`;
+      el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
       // inner只移动x
       const inner = el.querySelector(".inner");
       inner.style.transform = `translate3d(${x}px,0,0)`;
+
+      console.log('执行了')
     },
     enter (el, done) {
+
       // 获取offsetHeight就会重绘
       // 访问一下这个属性就可以浏览器重绘
       document.body.offsetHeight;
-
       // 指定动画结束位置
       el.style.transform = `translate3d(0, 0, 0)`;
       const inner = el.querySelector(".inner");
       inner.style.transform = `translate3d(0,0,0)`;
+
       el.addEventListener("transitionend", done);
     },
     afterEnter (el) {
@@ -65,9 +69,11 @@ export default {
 .ball-wrap
   .ball
     position fixed
+    border-radius 50%
     left 50%
-    bottom 10px
-    z-index 100000
+    bottom 50px
+    z-index 900000
+    background-color red
     color red
     transition all 0.5s cubic-bezier(0.49, -0.29, 0.75, 0.41)
     .inner

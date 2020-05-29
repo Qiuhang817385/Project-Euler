@@ -1,5 +1,4 @@
 <template>
-
   <div>
     <div class="item"
          v-for="item in data"
@@ -14,8 +13,9 @@
           <div class="title">{{item.title}}</div>
           <span>Count:{{item.count}}</span>
           <div class="info">
-            <i class="cubeic-add"
-               @click.stop.prevent="addCart($event, item)"></i>
+            <van-button class="cubeic-add"
+                        type="info"
+                        @click.stop.prevent="addCart($event, item)">立即购买</van-button>
           </div>
         </div>
         <!-- https://blog.csdn.net/zuorishu/article/details/84992194
@@ -29,7 +29,13 @@
 </template>
 
 <script>
+import { Icon, Button } from 'vant';
+
 export default {
+  components: {
+    [Icon.name]: Icon,
+    [Button.name]: Button,
+  },
   props: ["data"],
   methods: {
     addCart (event, item) {
@@ -53,9 +59,7 @@ export default {
     }
   },
   computed: {
-    // fullUrl:function(){
-    //   return `${this.baseUrl}`
-    // }
+
   },
 };
 </script>
@@ -77,7 +81,13 @@ export default {
     .title
       line-height 30px
     .cubeic-add
-      font-size 22px
+      display inline-block
+      margin 0px
+      border 0px
+      padding 0px
+      width 80px
+      height 27px
+      font-size 16px
     .info
       text-align right
 </style>

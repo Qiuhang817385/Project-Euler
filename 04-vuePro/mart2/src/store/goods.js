@@ -1,4 +1,4 @@
-import gs from '../service/goods';
+import { getGoodsInfoService } from '../service/goods';
 // 商品可以通过分类的形式进行过滤,这个需求,然后按照分类进行显示
 export default {
   state: {
@@ -17,7 +17,7 @@ export default {
   actions: {/* action是编写业务逻辑的地方,相当于控制器,调取业务层service的方法 */
     getGoods ({ state, commit }) {
       if (!state.keys.length) {
-        gs.getGoodsInfo().then(goodsInfo => {
+        getGoodsInfoService().then(goodsInfo => {
           commit('setGoodsInfo', goodsInfo)
         })
       }

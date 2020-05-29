@@ -17,28 +17,24 @@
           <router-link :to="'/detail/${item.id}'">
             <img :src="getItemURL(item.img)"
                  alt=""
-                 class="slider">
+                 class="slider" />
           </router-link>
         </van-swipe-item>
       </van-swipe>
       <!-- 商品 -->
-      <br>
       <good-list :data="goods"
                  @cartanim="$refs.ca.start($event)"></good-list>
-      <CartAnim ref="ca"></CartAnim>
+      <CartAnim ref="ca" />
     </van-pull-refresh>
   </div>
 </template>
 
 <script>
-
 // @ is an alias to /src
 import { mapState, mapActions, mapGetters } from 'vuex';
 import GoodList from '../components/GoodList';
 import CartAnim from '../components/CartAnim'
-// import kHeader from '../components/Header'
-import { PullRefresh } from 'vant';
-import { Toast } from 'vant';
+import { PullRefresh, Toast, Swipe, SwipeItem, NoticeBar } from 'vant';
 export default {
   name: 'Home',
   data () {
@@ -47,10 +43,18 @@ export default {
     }
   },
   components: {
-    GoodList, CartAnim
+    GoodList, CartAnim,
+    [PullRefresh.name]: PullRefresh,
+    [Toast.name]: Toast,
+    [Swipe.name]: Swipe,
+    [SwipeItem.name]: SwipeItem,
+    [NoticeBar.name]: NoticeBar
   },
   computed: {
-    ...mapState({ slider: state => state.goods.slider }),
+    ...mapState({
+      slider: state => state.goods.slider,
+
+    }),
     ...mapGetters(['goods'])
   },
   methods: {
@@ -86,8 +90,6 @@ export default {
 .my-swipe .van-swipe-item {
   color: #fff;
   font-size: 20px;
-  line-height: 150px;
   text-align: center;
-  background-color: #39a9ed;
 }
 </style>

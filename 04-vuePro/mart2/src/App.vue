@@ -27,10 +27,15 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-
+import { Tabbar, TabbarItem, Button } from 'vant';
 export default {
   methods: {
 
+  },
+  components: {
+    [Tabbar.name]: Tabbar,
+    [TabbarItem.name]: TabbarItem,
+    [Button.name]: Button,
   },
   data () {
     return {

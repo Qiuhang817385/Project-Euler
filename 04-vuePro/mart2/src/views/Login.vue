@@ -50,13 +50,6 @@
         </van-button>
       </div>
     </van-form>
-    <!-- <button @click="clickH">toast按钮</button> -->
-    <!-- <van-button type="default">默认按钮</van-button> -->
-    <!-- <van-button >
-      弹出默认键盘
-    </van-button> -->
-    <!-- 键盘 -->
-    <!-- 一个键盘绑定一个输入框???,应该是这个password是一个变量 -->
     <van-number-keyboard :show="show"
                          v-model="password"
                          extra-key="."
@@ -73,22 +66,31 @@
     <van-action-sheet v-model="show3"
                       :actions="actions3"
                       @select="onSelect3" />
-    <!-- 
-      
-     -->
   </div>
 
 </template>
 
 <script>
-import { Image } from 'vant';
-import { Toast } from 'vant';
+import { Image, Toast, Form, Field, Button, NumberKeyboard, ActionSheet, Notify } from 'vant';
+
+import { Message, Calendar } from 'ant-design-vue';
+
 export default {
+  components: {
+    [Image.name]: Image,
+    [Toast.name]: Toast,
+    [Form.name]: Form,
+    [Field.name]: Field,
+    [Button.name]: Button,
+    [NumberKeyboard.name]: NumberKeyboard,
+    [ActionSheet.name]: ActionSheet,
+    [Calendar.name]: Calendar,
+  },
   created () {
     // console.log("this.$refs.sms", this.$refs.sms)
   },
   mounted () {
-    this.$message.config({
+    Message.config({
       top: `200px`,
     });
     this.$refs.sms.onClick = function (e) {
@@ -103,12 +105,16 @@ export default {
       username: '',
       password: '',
       show: false,
+      //action2 对应控制-剪切复制弹出框
       show2: false,
+      //action3 对应控制-粘贴弹出框
       show3: false,
+      // 剪切复制弹出框
       actions2: [
         { name: '复制' },
         { name: '剪切板' }
       ],
+      // 粘贴弹出框
       actions3: [
         { name: '粘贴' }
       ],
@@ -116,11 +122,15 @@ export default {
     }
   },
   methods: {
+    onPanelChange (value, mode) {
+      console.log(value, mode);
+    },
     showKeyboard (e) {
-      console.log(e)
-      console.log(this)
+      // console.log(e)
+      // console.log(this)
       console.log(this.$refs.pwd.type)
     },
+    // 模拟长按事件
     ontouchend () {
       clearTimeout(this.timer)
     },
@@ -130,21 +140,21 @@ export default {
         this.show3 = true
       }, 1000)
     },
-    // 封装起来的发送手机验证码函数
+    /**
+     * 发送验证码
+     */
     sendVerify (number) {
       let results = this.$store.dispatch('sendSms', number);
       return results.then((tips) => {
-        // console.log(tips)
-        // 验证码数字
         let reg = /\d+/g;
         let code = reg.exec(tips);
-        // 提示文本
         return { tips, code }
       })
     },
-    // 封装起来的校验方法
+    /**
+     * 策略模式封装表单校验
+     */
     validateAll (parms, data) {
-      // params.方法1,params,方法2
       let willValidata = {
         username: (x) => {
           console.log(x)
@@ -161,27 +171,24 @@ export default {
           return reg.test(x);
         }
       }
-      // 表结构校验
       return willValidata[parms](data)
     },
+    /**
+     * 弹出框
+     */
     onSelect2 (e, item) {
       // 默认情况下点击选项时不会自动收起
       // 可以通过 close-on-click-action 属性开启自动收起
-      console.log(this.vNumber)
-      console.log(e)
-      console.log(item)
+      // console.log(this.vNumber)  console.log(e)  console.log(item)
       this.show2 = false;
       Toast('复制成功');
     },
+    /**
+     * 弹出框
+     */
     onSelect3 (e, item) {
-      // console.log(this.vNumber)
-      // console.log(e)
-      // console.log(item)
-      // this.show2 = false;
-      // Toast('复制成功');
       this.show3 = false;
       this.sms = this.vNumber;
-
     },
     sendSMS (e) {
       // 只有这个this是本身的this
@@ -190,30 +197,25 @@ export default {
       // 2.获取对电话号码校验,封装成校验规则;
       let fes = this.validateAll('phoneNumber', this.phone);
       if (fes) {
-        console.log('正在发送')
-        // 正常逻辑是无论是否发送成功,都要禁用1分钟
-        this.sendVerify(1232312).then((result) => {
+        this.sendVerify(this.phone).then((result) => {
           let { tips, code } = result;
           // 这里是直接赋值了,其实不应该这么做的,应该是点击复制的时候把值拿出来
-          // 这里是直接赋值了,其实不应该这么做的,应该是点击复制的时候把值拿出来
-          // 可以封装到本身的data当中进行管理
-          // 可以封装到本身的data当中进行管理
           // 可以封装到本身的data当中进行管理
           this.vNumber = code[0]
           console.log(tips, code[0]);
           // 模拟3秒后收到验证码
           setTimeout(() => {
-            this.$notify({
+            Notify({
               type: 'success',
               message: tips,
               duration: 5000,
               onClick: function () {
+                // 显示验证码
                 vueCom.show2 = true;
               }
             });
           }, 3000)
         });
-
         let vueCom = this;
         e.target.disabled = true;
         let i = 60;
@@ -228,13 +230,15 @@ export default {
           }
         }, 1000)
       } else {
-        this.$notify({
+        Notify({
           type: 'error',
           message: '手机号错误',
         });
       }
-      // console.log(this)
     },
+    /**
+     * 登录
+     */
     onSubmit (values) {
       console.log('submit', values);
       // 登录请求
@@ -242,50 +246,41 @@ export default {
       this.$store.dispatch('login', values)
         .then((code) => {
           console.log("code", code);
-
           if (!code) {
             console.log("code", code);
             // 登录成功
             // 拿到会跳地址再做重定向,如果没有,那么回到首页
             console.log("this.$router", this.$router);
             console.log("this.$route", this.$route);
-            this.$message
+            Message
               .loading('正在登陆..', 1.3)
               .then(() => {
-                this.$message.success('登陆成功', 1).then(() => {
+                Message.success('登陆成功', 1).then(() => {
                   const path = this.$route.query.redirect || '/';
                   this.$router.push(path);
                 })
               });
           } else {
-            this.$message
+            Message
               .error('登录失败,用户名或者密码错误', 1);
           }
         })
         .catch(error => {
           console.log('错误');
-          this.$message
+          Message
             .error('登录失败,用户名或者密码错误', 1);
         })
       // e.preventDefault();
     },
-    // 这是小键盘事件,可以做校验
+    /**
+     * 小键盘事件,可以做校验
+     */
     onInput (value) {
       // Toast(value);
     },
     onDelete () {
       // Toast('删除');
     },
-    clickH () {
-      const toast = this.$createToast({
-        time: 0,
-        txt: 'Toast time 0'
-      })
-      toast.show()
-      setTimeout(() => {
-        toast.hide()
-      }, 2000)
-    }
   },
 }
 </script>
