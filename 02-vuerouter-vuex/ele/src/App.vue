@@ -1,32 +1,50 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <el-button>el-button</el-button>
+    <el-button
+      type="primary"
+      icon="el-icon-search"
+    >搜索</el-button>
+
+    <div class="block">
+      <span class="demonstration">默认 Hover 指示器触发</span>
+      <el-carousel height="150px">
+        <el-carousel-item
+          v-for="item in 4"
+          :key="item"
+        >
+          <h3 class="small">{{ item }}</h3>
+        </el-carousel-item>
+      </el-carousel>
     </div>
-    <router-view />
   </div>
 </template>
+<script>
+export default {
+  name: "app",
+  components: {},
+  data () {
+    return {
+      name: "value"
+    };
+  }
+};
+</script>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<style>
+.el-carousel__item h3 {
+  color: #475669;
+  font-size: 14px;
+  opacity: 0.75;
+  line-height: 150px;
+  margin: 0;
 }
 
-#nav {
-  padding: 30px;
+.el-carousel__item:nth-child(2n) {
+  background-color: #99a9bf;
+}
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+.el-carousel__item:nth-child(2n + 1) {
+  background-color: #d3dce6;
 }
 </style>
