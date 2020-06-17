@@ -6,6 +6,8 @@
     <router-link to="/page2">页面2</router-link>
     <router-link :to="{name:'page3'}">页面3</router-link>
     <router-view></router-view>
+    <div :class="{ test: true }">123</div>
+    <div :class="[true?'test':'']">456</div>
   </div>
 </template>
 
@@ -26,5 +28,8 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.test {
+  color: red;
 }
 </style>
