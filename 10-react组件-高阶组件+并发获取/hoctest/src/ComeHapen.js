@@ -41,6 +41,7 @@ export default function ComeHapen () {
   const dbFuc2 = async () => {
     try {
       let promises = docs.map(() => fetchImg2());
+      // 只要await一个Promise.all(promise数组,就可以实现并发处理,但是有瑕疵,所以可以使用race方式)
       let res = await Promise.all(promises);
       console.log('res', res)
     } catch (error) {
