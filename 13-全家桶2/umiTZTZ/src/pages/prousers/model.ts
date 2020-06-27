@@ -86,6 +86,7 @@ const UserModel: UserModelType = {
       });
     },
   },
+  // 唯一可以修改 state 的地方
   reducers: {
     save(state, action) {
       console.log('action', action.payload.data);
