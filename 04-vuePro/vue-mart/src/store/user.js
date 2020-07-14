@@ -41,7 +41,6 @@ export default {
       localStorage.removeItem('token');
       //重置状态
       commit("setLoginState", false);
-
     }
   },
   modules: {
