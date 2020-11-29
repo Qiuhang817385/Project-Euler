@@ -1,34 +1,37 @@
-import React, { useState } from "react";
+import React from "react";
 import { Form, Input, Icon, Button, Select, Row, Col } from "antd";
 
 const { Option } = Select;
 
-function Param (props) {
-  console.log('props', props)
-  const { params: { onChange, key } } = props;
-  // const [checked, setChecked] = useState(false);
-  // const [defaultValue, setDefaultValue] = useState(undefined);
-  // const [defaultLabel, setDefaultLabel] = useState(undefined);
+const Param = (props) => {
+  const {
+    params: { onChange, record },
+  } = props;
 
   const handleChangeSelect = (valueSelect) => {
     console.log("下拉选择", valueSelect);
-    triggerChange({
-      "item1": valueSelect
-    }, key);
+    // key 是下发下来的key 0 1 唯一标识
+    triggerChange(
+      {
+        item1: valueSelect,
+      },
+      record.key
+    );
   };
 
   const handleInputChange = (valueInput) => {
-    console.log("Input选择框", valueInput.target.value);
-    triggerChange({
-      "item2": valueInput.target.value
-    }, key);
+    triggerChange(
+      {
+        item2: valueInput.target.value,
+      },
+      record.key
+    );
   };
 
-  const triggerChange = (d1, d2) => {
+  const triggerChange = (data, key) => {
+    // data,key {item1: "jack"} 0
     if (onChange) {
-      onChange(
-        ...d1, d2
-      )
+      onChange({ ...data, key });
     }
   };
 
@@ -42,7 +45,7 @@ function Param (props) {
             placeholder="Select a person"
             optionFilterProp="children"
             onChange={handleChangeSelect}
-            value={key.item1}
+            value={record.item1}
           >
             <Option value="jack">Jack</Option>
             <Option value="lucy">Lucy</Option>
@@ -51,7 +54,7 @@ function Param (props) {
         </Col>
         <Col key={1} span={8}>
           <Input
-            value={key.item2}
+            value={record.item2}
             placeholder="passenger name"
             style={{ width: "60%", marginRight: 8 }}
             onChange={handleInputChange}
@@ -62,4 +65,4 @@ function Param (props) {
   );
 }
 
-export default Form.create({})(Param)
+export default Form.create({})(Param);
